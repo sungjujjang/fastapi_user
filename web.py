@@ -83,7 +83,7 @@ def register(item: RegiForm):
         token = create_jwt(item.userid)
         return {"status": "success", "token": token}
     except Exception as e:
-        return {"status": "error", "message": "ungi"}
+        return {"status": "error", "message": ""}
 
 class LoginForm(BaseModel):
     userid: str
