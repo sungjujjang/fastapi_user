@@ -3,12 +3,11 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import jwt
 import datetime
-import settings
 import time
 import bcrypt
 import sqlite3
 
-SECRET_KEY = settings.SECRET_KEY
+SECRET_KEY = "sjjang0702s"
 
 def hash_password(password: str) -> str:
     hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
@@ -76,7 +75,7 @@ class RegiForm(BaseModel):
 @app.post("/register")
 def register(item: RegiForm):
     if get_user(item.userid):
-        return {"status": "error", "message": "fuk yr id duplication"}
+        return {"status": "error", "message": "User already exists"}
     item_dict = item.model_dump()
     try:
         status = add_user(item.userid, item.nickname, item.password, item.email)
@@ -106,3 +105,4 @@ def verify_token(token: str):
         return {"status": "success", "data": result}
     else:
         return {"status": "error", "message": result}
+    
